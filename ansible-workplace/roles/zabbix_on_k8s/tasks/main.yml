@@ -1,0 +1,40 @@
+---
+- name: Create hostPath directory for TimescaleDB
+  file:
+    path: /mnt/data/timescaledb
+    state: directory
+    owner: 1000
+    group: 1000
+    mode: '0755'
+
+- name: Copy TimescaleDB PV manifest
+  template:
+    src: timescaledb-pv.yaml
+    dest: /tmp/timescaledb-pv.yaml
+
+- name: Apply TimescaleDB PV
+  command: kubectl apply -f /tmp/timescaledb-pv.yaml
+
+- name: Copy TimescaleDB manifest (Deployment + PVC)
+  template:
+    src: timescaledb.yaml
+    dest: /tmp/timescaledb.yaml
+
+- name: Apply TimescaleDB manifest
+  command: kubectl apply -f /tmp/timescaledb.yaml
+
+- name: Copy Zabbix Server manifest
+  template:
+    src: zabbix-server.yaml
+    dest: /tmp/zabbix-server.yaml
+
+- name: Apply Zabbix Server manifest
+  command: kubectl apply -f /tmp/zabbix-server.yaml
+
+- name: Copy Zabbix Web manifest
+  template:
+    src: zabbix-web.yaml
+    dest: /tmp/zabbix-web.yaml
+
+- name: Apply Zabbix Web manifest
+  command: kubectl apply -f /tmp/zabbix-web.yaml

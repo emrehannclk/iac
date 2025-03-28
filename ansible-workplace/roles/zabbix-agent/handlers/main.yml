@@ -1,0 +1,9 @@
+# handlers/main.yml
+---
+- name: restart zabbix-agent
+  systemd:
+    name: zabbix-agent
+    state: restarted
+
+- name: reload firewalld
+  command: firewall-cmd --reload

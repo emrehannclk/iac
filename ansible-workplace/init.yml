@@ -1,0 +1,5 @@
+- name: Run roles
+  hosts: local
+  become: yes
+  roles:
+    - zabbix_on_k8s

@@ -1,0 +1,8 @@
+---
+- hosts: local
+  become: yes
+  vars:
+    zabbix_server_ip: "45.147.46.172"
+    zabbix_server_port: "30697"
+  roles:
+    - zabbix-agent
